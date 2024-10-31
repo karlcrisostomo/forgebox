@@ -1,4 +1,5 @@
 export type Styles = {
+  component: string;
   container: string;
 };
 

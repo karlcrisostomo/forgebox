@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "watch:typed-scss": "typed-scss-modules src --watch --exportType default --nameFormat camel",
-    "dev": "concurrently \"yarn run watch:typed-scss\" \"next dev --turbopack --port 3000\"",
+    "start:dev": "npx concurrently \"yarn run watch:typed-scss\" \"next dev --turbopack --port 3000\"",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",

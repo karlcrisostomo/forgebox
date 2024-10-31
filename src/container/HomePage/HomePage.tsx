@@ -1,16 +1,43 @@
 import { NextPageWithLayout } from "@/types";
-import { useCounterSlice } from "@/hooks/useCounterSlice";
-import React from "react";
+import styles from "./styles.module.scss";
+import React, { useCallback, useEffect } from "react";
+import { useThemeChanger } from "@/hooks/useThemeChanger";
 const HomePage: NextPageWithLayout = () => {
-  const { increment, decrement, count } = useCounterSlice();
+  const { backgroundColor, setBackgroundColor } = useThemeChanger();
+
+  // Prototype for real-time background color change:
+  // Note: This is an initial implementation to test functionality
+  // and may not represent the final code logic
+
+  useEffect(() => {
+    document.documentElement.style.setProperty(
+      "--background-color",
+      backgroundColor,
+    );
+  }, [backgroundColor]);
+
+  const handleColorChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const newColor = e.target.value;
+      setBackgroundColor(newColor);
+    },
+    [setBackgroundColor],
+  );
+
   return (
-    //test
-    <div>
-      <span>ForgeBox</span>
-      <h1>Counter</h1>
-      <span>{count}</span>
-      <button onClick={increment}>+</button>
-      <button onClick={decrement}>-</button>
+    <div className={styles.container}>
+      <div className={styles.component}>
+        <h1>component</h1>
+      </div>
+
+      <button>
+        Color Picker
+        <input
+          type="color"
+          value={backgroundColor}
+          onChange={handleColorChange}
+        />
+      </button>
     </div>
   );
 };
