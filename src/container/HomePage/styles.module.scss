@@ -3,13 +3,14 @@
 .container {
     display: flex;
     flex-direction: column;
-    background-color: var(--background-color, #ffffff);
+
     gap: 2rem;
     justify-content: center;
     align-items: center;
 }
 .component {
     margin-top: 5rem;
+    background-color: var(--background-color, #ffffff);
     width: fit-content;
     padding: 1rem;
     border: 1px solid red;
