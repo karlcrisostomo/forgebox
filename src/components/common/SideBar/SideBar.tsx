@@ -1,6 +1,6 @@
 import { IToolBoxMenuItem, ToolBoxMenuItems } from "@/configs";
 import { memo, useMemo } from "react";
-
+// just assume that toolbox page has sidebar 
 export const SideBar = memo(() => {
   const renderLinks = useMemo(
     () => (items: IToolBoxMenuItem[]) =>
