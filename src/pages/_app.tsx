@@ -1,3 +1,4 @@
+
 import { store } from "@/store";
 import "@/styles/globals.scss";
 import { CustomAppProps } from "@/types";

@@ -2,6 +2,9 @@ import { NextPageWithLayout } from "@/types";
 import styles from "./styles.module.scss";
 import React, { useCallback, useEffect } from "react";
 import { useThemeChanger } from "@/hooks/useThemeChanger";
+import { RootLayout } from "@/layouts/RootLayout";
+
+
 const HomePage: NextPageWithLayout = () => {
   const { backgroundColor, setBackgroundColor } = useThemeChanger();
 
@@ -12,7 +15,7 @@ const HomePage: NextPageWithLayout = () => {
   useEffect(() => {
     document.documentElement.style.setProperty(
       "--background-color",
-      backgroundColor,
+      backgroundColor
     );
   }, [backgroundColor]);
 
@@ -21,7 +24,7 @@ const HomePage: NextPageWithLayout = () => {
       const newColor = e.target.value;
       setBackgroundColor(newColor);
     },
-    [setBackgroundColor],
+    [setBackgroundColor]
   );
 
   return (
@@ -33,7 +36,7 @@ const HomePage: NextPageWithLayout = () => {
       <button>
         Color Picker
         <input
-          type="color"
+          type='color'
           value={backgroundColor}
           onChange={handleColorChange}
         />
@@ -41,5 +44,7 @@ const HomePage: NextPageWithLayout = () => {
     </div>
   );
 };
+
+HomePage.getLayout = (page) => <RootLayout>{page}</RootLayout>;
 
 export default HomePage;
