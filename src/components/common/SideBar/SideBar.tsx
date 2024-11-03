@@ -1,10 +1,17 @@
 import { IToolBoxMenuItem, ToolBoxMenuItems } from "@/configs";
+import { useRouter } from "@/hooks";
+
 import { memo, useMemo } from "react";
-// just assume that toolbox page has sidebar 
+// just assume that toolbox page has sidebar
 export const SideBar = memo(() => {
+  const { pathname } = useRouter();
+
   const renderLinks = useMemo(
     () => (items: IToolBoxMenuItem[]) =>
-      items.map(({ name, href, icon }) => {
+      items.map(({ name, href, icon, includePrefixes }) => {
+        const currentLink = includePrefixes.some((prefix) =>
+          pathname.includes(prefix)
+        );
         return <div></div>;
       }),
     []
