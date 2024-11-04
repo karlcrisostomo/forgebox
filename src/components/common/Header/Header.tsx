@@ -7,12 +7,12 @@ export const Header = memo(() => {
     () => (items: INavbarMenuItem[]) =>
       items.map(({ name, href }) => {
         return (
-          <CustomLink key={name} href={href} className=''>
+          <CustomLink key={name} href={href} className="">
             {name}
           </CustomLink>
         );
       }),
-    []
+    [],
   );
 
   return <div> {navBarLinks(NavbarMenuItems)}</div>;

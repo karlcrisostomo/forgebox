@@ -1,6 +1,5 @@
 import { IToolBoxMenuItem, ToolBoxMenuItems } from "@/configs";
 
-
 import { memo, useMemo } from "react";
 import CustomLink from "../CustomLink/CustomLink";
 // just assume that toolbox page has sidebar
@@ -21,7 +20,7 @@ export const SideBar = memo(() => {
           </CustomLink>
         );
       }),
-    []
+    [],
   );
 
   return <div>{renderLinks(ToolBoxMenuItems)}</div>;
