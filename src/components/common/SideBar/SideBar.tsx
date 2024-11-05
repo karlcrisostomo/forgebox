@@ -15,12 +15,12 @@ export const SideBar = memo(() => {
         // );
         return (
           <CustomLink prefetch shallow href={href} key={name} className="">
-            <div>{icon}</div>
+            {icon}
             <div>{name}</div>
           </CustomLink>
         );
       }),
-    [],
+    []
   );
 
   return <div>{renderLinks(ToolBoxMenuItems)}</div>;
