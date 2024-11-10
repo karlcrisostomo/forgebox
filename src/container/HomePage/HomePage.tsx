@@ -3,7 +3,7 @@ import styles from "./styles.module.scss";
 import React, { useCallback, useEffect } from "react";
 import { useThemeChanger } from "@/hooks/useThemeChanger";
 import { RootLayout } from "@/layouts/RootLayout";
-import { ToolBar } from "@/components/Common/Toolbar";
+import { DraggableToolBar } from "@/components";
 
 const HomePage: NextPageWithLayout = () => {
   const { backgroundColor, setBackgroundColor } = useThemeChanger();
@@ -42,7 +42,9 @@ const HomePage: NextPageWithLayout = () => {
         />
       </button>
 
-      <ToolBar />
+      <DraggableToolBar toolbarHeight={40}>
+        <span>content</span>
+      </DraggableToolBar>
     </div>
   );
 };

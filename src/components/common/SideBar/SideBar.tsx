@@ -20,7 +20,7 @@ export const SideBar = memo(() => {
           </CustomLink>
         );
       }),
-    []
+    [],
   );
 
   return <div>{renderLinks(ToolBoxMenuItems)}</div>;

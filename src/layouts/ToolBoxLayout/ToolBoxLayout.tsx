@@ -1,14 +1,14 @@
 import { memo } from "react";
 import { IToolBoxLayoutProps } from "./ToolBoxLayout.types";
 import SideBar from "@/components/Common/SideBar/SideBar";
+import { RootLayout } from "../RootLayout";
 
 const ToolBoxLayout = memo<IToolBoxLayoutProps>(({ children }) => {
   return (
-    <div>
+    <RootLayout>
       <SideBar />
-
       {children}
-    </div>
+    </RootLayout>
   );
 });
 

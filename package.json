@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.3.0",
+    "classnames": "^2.5.1",
     "framer-motion": "^11.11.10",
     "next": "15.0.2",
     "react": "19.0.0-rc-02c0e824-20241028",

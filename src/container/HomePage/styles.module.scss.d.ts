@@ -1,4 +1,5 @@
 export type Styles = {
+  styledDraggableToolbarContainer: string;
   component: string;
   container: string;
 };

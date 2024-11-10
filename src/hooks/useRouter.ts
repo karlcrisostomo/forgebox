@@ -1,8 +1,6 @@
-import { base } from "framer-motion/client";
-import { url } from "inspector";
 import getConfig from "next/config";
 import { NextRouter, useRouter as useNextRouter } from "next/router";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { UrlObject } from "url";
 
 interface TransitionOptions {
@@ -15,7 +13,7 @@ interface WrappedRouter extends NextRouter {
   replace: (
     url: Url,
     as?: Url,
-    options?: TransitionOptions
+    options?: TransitionOptions,
   ) => Promise<boolean>;
   pathname: string;
   asPath: string;
@@ -30,20 +28,23 @@ export const useRouter = () => {
 
   const basePath = publicRuntimeConfig?.basePath || "";
 
-  const addBasePath = (path: Url | undefined): Url | undefined => {
-    if (typeof path === "string") {
-      return `${basePath}${path}`;
-    }
-    if (path) {
-      return {
-        ...path,
-        pathname: path.pathname
-          ? `${basePath}${path.pathname}`
-          : `${basePath}${router.pathname}`,
-      };
-    }
-    return path;
-  };
+  const addBasePath = useCallback(
+    (path: Url | undefined): Url | undefined => {
+      if (typeof path === "string") {
+        return `${basePath}${path}`;
+      }
+      if (path) {
+        return {
+          ...path,
+          pathname: path.pathname
+            ? `${basePath}${path.pathname}`
+            : `${basePath}${router.pathname}`,
+        };
+      }
+      return path;
+    },
+    [basePath, router.pathname],
+  );
 
   const wrappedRouter: WrappedRouter = useMemo(
     () => ({
@@ -57,12 +58,10 @@ export const useRouter = () => {
         ? router.route.slice(basePath.length)
         : router.route,
     }),
-    [router]
+    [addBasePath, basePath, router],
   );
 
-
-  return wrappedRouter
-
+  return wrappedRouter;
 };
 
 export default useRouter;

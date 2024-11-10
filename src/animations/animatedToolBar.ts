@@ -14,7 +14,7 @@ export const animateToolBar: Variants = {
   },
   animate: {
     opacity: 1,
-    width: "50rem",
+    width: "20%",
     x: 0,
     transition: {
       delay: 0.5,
