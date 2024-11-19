@@ -1,8 +1,7 @@
-export interface DragConstraints {
-  top: number;
-  bottom: number;
-}
-export interface IToolBarProps {
+import { DraggableProps } from "framer-motion";
+
+
+export interface IToolBarProps extends DraggableProps {
   classname?: string;
-  toolbarHeight?: number;
+  toolbarHeight: number;
 }

@@ -1,85 +1,83 @@
-import { memo, useEffect, useMemo, useRef, useState } from "react";
-import { DragConstraints, IToolBarProps } from "./DraggableToolbar.types";
-import { MotionValue, useMotionValue, motion } from "framer-motion";
-import styles from "./styles.module.scss";
-import { animateToolBar } from "@/animations";
-import dragIcon from "@/assets/drag-indicator.svg";
-import { MotionButton } from "../MotionButton";
-import { IToolBarItems, ToolBarItems } from "@/configs/ToolbarItems";
-export const DraggableToolBar = memo<IToolBarProps>(({ toolbarHeight }) => {
-  const dragY: MotionValue<number> = useMotionValue(0);
-  const dragRef = useRef<HTMLButtonElement>(null);
+import { memo, useEffect, useMemo, useRef, useState } from 'react';
+import { IToolBarProps } from './DraggableToolbar.types';
+import { BoundingBox, motion } from 'framer-motion';
+import styles from './styles.module.scss';
+import { animateToolBar, dragTransition } from '@/animations';
+import dragIcon from '@/assets/drag-indicator.svg';
+import { MotionButton } from '../MotionButton';
+import { IToolBarItems, ToolBarItems } from '@/configs/ToolbarItems';
+export const DraggableToolBar = memo<IToolBarProps>(
+  ({ toolbarHeight, ...props }) => {
+    // const dragY: MotionValue<number> = useMotionValue(0);
 
-  const [isDragging, setIsDragging] = useState<boolean>(false);
+    const [dragConstraints, setDragConstraints] = useState<
+      Partial<BoundingBox>
+    >({});
+    const [isDragging, setIsDragging] = useState<boolean>(false);
+    const toolbarRef = useRef<HTMLDivElement>(null);
 
-  const [Constraints, SetConstraints] = useState<DragConstraints>({
-    top: 0,
-    bottom: 0,
-  });
+    const renderToolbarItems = useMemo(
+      () => (items: IToolBarItems[]) =>
+        items.map(({ title }) => {
+          return (
+            <nav key={title}>
+              <span>{title}</span>
+            </nav>
+          );
+        }),
+      []
+    );
 
-  const renderToolbarItems = useMemo(
-    () => (items: IToolBarItems[]) =>
-      items.map(({ title }) => {
-        return (
-          <nav key={title}>
-            <span>{title}</span>
-          </nav>
-        );
-      }),
-    []
-  );
+    // this dynamically sets the page height for better drag of the toolbar e.g. if the overall page height is 500px we have to subtract the toolbar height
+    // 500px - toolbar height(50px) = 450px and then we also subtract the buffer to ensure that toolbar doesnt go too far up so 450px - buffer(100px) = 350px
 
-  // theres a bug or incorrect logic with the height will figure out soon
-  useEffect(() => {
-    const updatedConstraints = (): void => {
-      if (dragRef.current) {
-        const pageHeight: number = document.documentElement.scrollHeight;
-        const dragRect = dragRef.current.getBoundingClientRect();
-        SetConstraints({
-          top: 0,
-          bottom: pageHeight - dragRect.height!,
+    useEffect(() => {
+      const updateConstraints = () => {
+        const pageHeight = window.innerHeight;
+        const buffer = 100;
+
+        setDragConstraints({
+          top: -pageHeight + toolbarHeight + buffer,
+          bottom: 0,
         });
-      }
+      };
 
-      return;
-    };
+      updateConstraints();
+      window.addEventListener('resize', updateConstraints);
 
-    updatedConstraints();
+      return () => window.removeEventListener('resize', updateConstraints);
+    }, [setDragConstraints, toolbarHeight]);
 
-    const resizeObserver = new ResizeObserver(updatedConstraints);
-    resizeObserver.observe(document.documentElement);
+    return (
+      <motion.div
+        {...props}
+        ref={toolbarRef}
+        variants={animateToolBar}
+        initial='initial'
+        animate='animate'
+        drag={isDragging ? 'y' : false}
+        dragTransition={dragTransition}
+        dragConstraints={dragConstraints}
+        dragMomentum={false}
+        className={styles.styledToolbarWrapper}
+      >
+        <MotionButton
+          onMouseDown={() => setIsDragging(true)}
+          onMouseUp={() => setIsDragging(false)}
+          whileDrag={{ cursor: 'grabbing' }}
+          icon={dragIcon}
+          alt='dragIcon'
+          width={20}
+          height={20}
+        />
 
-    return () => resizeObserver.disconnect();
-  }, [toolbarHeight]);
-
-  return (
-    <motion.div
-      variants={animateToolBar}
-      initial="initial"
-      animate="animate"
-      drag={isDragging ? "y" : false}
-      dragMomentum={false}
-      dragConstraints={Constraints}
-      className={styles.styledToolbarWrapper}
-      style={{ height: `${toolbarHeight}px`, y: dragY }}
-    >
-      <MotionButton
-        onMouseDown={() => setIsDragging(true)}
-        onMouseUp={() => setIsDragging(false)}
-        whileDrag={{ cursor: "grabbing" }}
-        ref={dragRef}
-        icon={dragIcon}
-        alt="dragIcon"
-        width={20}
-        height={20}
-      />
-
-      <motion.div className={styles.styledToolbarContent}>
-        {renderToolbarItems(ToolBarItems)}
+        <motion.div className={styles.styledToolbarContent}>
+          {renderToolbarItems(ToolBarItems)}
+        </motion.div>
       </motion.div>
-    </motion.div>
-  );
-});
+    );
+  }
+);
 
-DraggableToolBar.displayName = "DraggableToolBar";
+DraggableToolBar.displayName = 'DraggableToolBar';
 export default DraggableToolBar;

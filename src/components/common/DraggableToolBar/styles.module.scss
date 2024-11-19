@@ -1,10 +1,6 @@
 .styledToolbarWrapper {
-  height: auto;
-  
-  left: 0;
-  right: 0;
+  position: absolute;
   background-color: white;
-  border: 1px solid black;
   border-radius: 1rem;
   padding: 0.4rem;
   z-index: 1000;
@@ -13,6 +9,7 @@
   flex-direction: row;
   justify-content: space-around;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  bottom: 1rem;
 }
 
 .styledToolbarContent {

@@ -8,7 +8,7 @@ import styles from "./styles.module.scss";
 export const CTAButton = forwardRef<HTMLButtonElement, ICTAButtonProps>(
   (
     { classname, icon, alt, width, height, onMouseDown, onMouseUp, ...props },
-    ref
+    ref,
   ) => {
     return (
       <motion.button
@@ -28,11 +28,9 @@ export const CTAButton = forwardRef<HTMLButtonElement, ICTAButtonProps>(
           height={height}
           style={{ pointerEvents: "none" }}
         />
-
-        
       </motion.button>
     );
-  }
+  },
 );
 
 CTAButton.displayName = "CTAButton";
