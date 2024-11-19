@@ -1,17 +1,24 @@
 //for type generation testing
 
 .container {
-    display: flex;
-    flex-direction: column;
-
-    gap: 2rem;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  border: 1px solid red;
+  flex-direction: column;
+  gap: 2rem;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
 }
 .component {
-    margin-top: 5rem;
-    background-color: var(--background-color, #ffffff);
-    width: fit-content;
-    padding: 1rem;
-    border: 1px solid red;
+  margin-top: 5rem;
+  background-color: var(--background-color, #ffffff);
+  width: fit-content;
+  padding: 1rem;
+  border: 1px solid red;
+}
+
+.placeholder {
+  width: 200px;
+  height: 200px;
+  background-color: red;
 }

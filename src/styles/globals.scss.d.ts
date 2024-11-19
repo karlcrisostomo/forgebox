@@ -1,7 +1,7 @@
 export type Styles = {
-  component: string;
-  container: string;
-  placeholder: string;
+  bar: string;
+  nprogress: string;
+  spinnerIcon: string;
 };
 
 export type ClassNames = keyof Styles;

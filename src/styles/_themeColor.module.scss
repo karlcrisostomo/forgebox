@@ -1,0 +1,11 @@
+$initial-text-color: "#050505";
+$accent-color: "#0c2a7a";
+$primary-color: "#3e23c4";
+$secondary-color: "#474457";
+
+:export {
+  initialTextColor: $initial-text-color;
+  accent: $accent-color;
+  primary: $primary-color;
+  secondary: $secondary-color;
+}

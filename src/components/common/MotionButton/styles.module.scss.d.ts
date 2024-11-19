@@ -1,7 +1,6 @@
 export type Styles = {
-  component: string;
-  container: string;
-  placeholder: string;
+  styledButton: string;
+  styledDisabled: string;
 };
 
 export type ClassNames = keyof Styles;

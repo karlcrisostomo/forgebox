@@ -1,7 +1,8 @@
 export type Styles = {
-  component: string;
-  container: string;
-  placeholder: string;
+  accent: string;
+  initialTextColor: string;
+  primary: string;
+  secondary: string;
 };
 
 export type ClassNames = keyof Styles;
