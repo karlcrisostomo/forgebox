@@ -1,23 +1,48 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import colors from "@/styles/_themeColor.module.scss";
+import { IThemeState } from "@/types";
+import { generateRandomColors } from "@/utils";
 
-interface themeState {
-  backgroundColor: string;
-}
-
-const initialState: themeState = {
-  backgroundColor: "#ffffff",
+const initialThemeState: IThemeState = {
+  textColor: colors.initialTextColor,
+  accentColor: colors.accent,
+  primaryColor: colors.primary,
+  secondaryColor: colors.secondary,
+  past: [],
+  future: [],
 };
 
-const themeChangerReducer = createSlice({
-  name: "theme",
-  initialState,
+export const themeChangerSlice = createSlice({
+  name: "themeChanger",
+  initialState: initialThemeState,
 
   reducers: {
-    setBackgroundColor: (state, action: PayloadAction<string>) => {
-      state.backgroundColor = action.payload;
+    updateColors: (state, action: PayloadAction<Partial<IThemeState>>) => {
+      const { ...payload } = state;
+      state.past.push({ ...payload });
+      state.future = [];
+      Object.assign(state, action.payload);
+    },
+
+    randomizeColors: (state) => {
+      const { ...payload } = state;
+      state.past.push({ ...payload });
+      state.future = [];
+
+      const colorKeys = [
+        "textColor",
+        "accentColor",
+        "primaryColor",
+        "secondaryColor",
+      ] as const;
+
+      colorKeys.forEach((color) => {
+        state[color] = generateRandomColors();
+      });
     },
   },
 });
 
-export const { setBackgroundColor } = themeChangerReducer.actions;
-export default themeChangerReducer.reducer;
+export const { updateColors, randomizeColors } = themeChangerSlice.actions;
+
+export default themeChangerSlice.reducer;
