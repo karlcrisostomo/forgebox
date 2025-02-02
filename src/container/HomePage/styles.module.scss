@@ -2,19 +2,30 @@
 
 .container {
   display: flex;
-  border: 1px solid red;
+
   flex-direction: column;
   gap: 2rem;
   height: 100vh;
   justify-content: center;
   align-items: center;
+
+  background-color: var(--bg-color);
+  [data-theme='dark'] & {
+    --bg-color: #121212;
+    --text-color: #ffffff;
+  }
+
+  [data-theme='light'] & {
+    --bg-color: #ffffff;
+    --text-color: #000000;
+  }
 }
 .component {
   margin-top: 5rem;
   background-color: var(--background-color, #ffffff);
   width: fit-content;
   padding: 1rem;
-  border: 1px solid red;
+
 }
 
 .placeholder {
