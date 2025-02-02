@@ -1,22 +1,22 @@
-import counterReducer from "@/store/counterReducer";
-import themeChangerReducer from "@/store/themeChangerReducer";
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, createStore } from "redux";
 import { persistReducer, persistStore } from "redux-persist";
-import storage from "redux-persist/lib/storage";
 
-const persistConfig = {
-  key: "forgebox-store",
-  storage,
+import themeChanger from "./themeChanger/reducer";
+import sessionStorage from "redux-persist/lib/storage/session";
+
+const persistCofig = {
+  key: "forgebox",
+  storage: sessionStorage,
 };
-
-const persistedReducer = persistReducer(persistConfig, themeChangerReducer);
-export const store = configureStore({
-  reducer: {
-    counter: counterReducer,
-    theme: persistedReducer,
-  },
+const rootReducer = combineReducers({
+  themeChanger,
 });
 
+const persistedReducer = persistReducer(persistCofig, rootReducer);
+
+export const store = createStore(persistedReducer);
 export const persistor = persistStore(store);
+
+export default rootReducer;
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
