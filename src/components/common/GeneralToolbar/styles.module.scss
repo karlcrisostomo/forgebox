@@ -1,0 +1,27 @@
+.toolBarContainer {
+  width: 50%;
+  border: solid black 1px;
+  border-radius: 1em;
+  position: fixed;
+  bottom: 0;
+  padding: 1em;
+  margin-bottom: 1rem;
+  background-color: white;
+  display: flex;
+  gap: 2em;
+  align-items: center;
+}
+
+.buttonWrapper {
+  width: 100%;
+  font-size: 1rem;
+  position: relative;
+}
+
+.pickerWrapper {
+  position: absolute;
+  z-index: 999999;
+
+
+  border-radius: 2em;
+}

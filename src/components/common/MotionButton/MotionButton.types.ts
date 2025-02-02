@@ -1,13 +1,10 @@
-import { MotionProps } from "framer-motion";
-import { MouseEventHandler, Ref } from "react";
+import { MotionProps } from 'framer-motion';
+import { MouseEvent } from 'react';
 
-export interface ICTAButtonProps extends MotionProps {
+export interface IMotionButtonProps extends MotionProps {
+  className?: string;
+  children: React.ReactNode;
+  onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
   icon?: string;
-  classname?: string;
-  alt: string;
-  width: number;
-  height: number;
-  ref?: Ref<HTMLButtonElement>;
-  onMouseDown: MouseEventHandler<HTMLButtonElement>;
-  onMouseUp: MouseEventHandler<HTMLButtonElement>;
+  index?: number;
 }

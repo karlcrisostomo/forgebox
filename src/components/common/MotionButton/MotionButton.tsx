@@ -1,38 +1,26 @@
-import { forwardRef } from "react";
-import { ICTAButtonProps } from "./MotionButton.types";
-import defaultIcon from "@/assets/default-icon.svg";
-import { motion } from "framer-motion";
-import Image from "next/image";
-import classNames from "classnames";
-import styles from "./styles.module.scss";
-export const CTAButton = forwardRef<HTMLButtonElement, ICTAButtonProps>(
-  (
-    { classname, icon, alt, width, height, onMouseDown, onMouseUp, ...props },
-    ref,
-  ) => {
-    return (
-      <motion.button
-        ref={ref}
-        className={classNames(styles.styledButton, classname, {
-          [styles.styledDisabled]: classname,
-        })}
-        onMouseDown={onMouseDown}
-        onMouseUp={onMouseUp}
-        {...props}
-      >
-        <Image
-          className={classname}
-          src={icon || defaultIcon}
-          alt={alt}
-          width={width}
-          height={height}
-          style={{ pointerEvents: "none" }}
-        />
-      </motion.button>
-    );
-  },
+import { memo } from 'react';
+import { IMotionButtonProps } from './MotionButton.types';
+
+import { motion } from 'framer-motion';
+import classNames from 'classnames';
+import styles from './styles.module.scss';
+import Image from 'next/image';
+
+const MotionButton = memo<IMotionButtonProps>(
+  ({ className, children, onClick, icon, ...props }) => (
+    <motion.button
+      onClick={onClick}
+      className={classNames(styles.styledButton, className)}
+      {...props}
+    >
+      <div>
+        {icon && <Image src={icon} width={24} height={24} alt={icon} />}
+        {children}
+      </div>
+    </motion.button>
+  )
 );
 
-CTAButton.displayName = "CTAButton";
+MotionButton.displayName = 'MotionButton';
 
-export default CTAButton;
+export default MotionButton;

@@ -1,18 +1,16 @@
 .styledButton {
-    cursor: pointer;
-    border: none;
-    padding: .4rem;
-    border-radius: .2em;
-    background-color: transparent;
-    border: #b6b8b6 solid 0.1rem;
- 
+  cursor: pointer;
+  border: none;
+  padding: 0.4rem;
+  border-radius: 0.2em;
+  background-color: transparent;
+  border: #b6b8b6 solid 0.1rem;
 }
 
 .styledDisabled {
+  background-color: gray;
 }
 
-
 .styledButton:hover {
-
-    background-color: #d4d9d6;
+  background-color: #d4d9d6;
 }
