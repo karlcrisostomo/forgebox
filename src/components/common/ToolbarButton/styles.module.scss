@@ -2,19 +2,24 @@
 
 .toolbarBtnContainer {
   position: relative;
-  padding: 1em;
-  width: 100%;
+  width: fit-content;
   border: none;
   border-radius: 0.4em;
-  background-color: $whiteCedar;
-  border: $aria 1px solid;
+
   &:hover {
     background-color: $bleachedSilk;
     cursor: pointer;
   }
-
   span {
-    font-size: 1.1rem;
-  color: $white;;
+    font-size: 0.9rem;
   }
+}
+.toolbarBtnContent {
+  display: flex;
+  margin: auto;
+  align-items: center;
+  gap: 5px;
+}
+.colorSwatch {
+  width: 30px;
 }

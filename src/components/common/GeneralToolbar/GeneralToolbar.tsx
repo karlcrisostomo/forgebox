@@ -7,6 +7,8 @@ import { useClickOutside, useThemeChange } from '@/hooks';
 import { AnimatePresence, motion } from 'framer-motion';
 import { THEME_BUTTONS } from '@/constants/ThemeButton';
 import { MotionButton } from '../MotionButton';
+import undoIcon from '@/assets/icons/undo-icon.svg';
+import redoIcon from '@/assets/icons/redo-icon.svg';
 
 const GeneralToolbar = memo(() => {
   const [activeColor, setActiveColor] = useState<ThemeColorType | null>(null);
@@ -50,14 +52,26 @@ const GeneralToolbar = memo(() => {
   return (
     <>
       <div className={styles.toolBarContainer}>
-        {THEME_BUTTONS.map(({ type, title }, idx) => (
+        {THEME_BUTTONS.map(({ type, title, category }, idx) => (
           <div key={title} className={styles.buttonWrapper}>
             <ToolbarButton
               key={type}
-              themePalette={getColorByType[type]}
+              type={type}
+              themePalette={
+                category === 'colors'
+                  ? getColorByType[type as keyof typeof getColorByType]
+                  : undefined
+              }
               title={title}
-              isActive={activeColor === type}
-              onClick={(e) => handleButtonClick(type, e)}
+              showTitle={type === 'undo' || type === 'redo' ? false : true}
+              icons={type === 'undo' ? undoIcon : redoIcon}
+              onClick={
+                category === 'colors'
+                  ? (e) => handleButtonClick(type as ThemeColorType, e)
+                  : category === 'history' && type === 'undo'
+                    ? undoColor
+                    : redoColor
+              }
               index={idx}
             />
             <AnimatePresence>
@@ -66,7 +80,7 @@ const GeneralToolbar = memo(() => {
                   ref={containerRef}
                   className={styles.pickerWrapper}
                   initial={{ opacity: 0, bottom: 0, left: 0 }}
-                  animate={{ opacity: 1, top: '-450px', left: 0 }} // temporary top position
+                  animate={{ opacity: 1, top: '-500px', left: 0 }} // temporary top position
                   exit={{ opacity: 1, bottom: 0 }}
                   style={{
                     left: position.x,
@@ -86,14 +100,6 @@ const GeneralToolbar = memo(() => {
 
         <MotionButton onClick={toggleDarkMode}>
           {isDarkMode ? 'Dark' : 'Light'}
-        </MotionButton>
-
-        <MotionButton onClick={undoColor} whileTap={{ scale: 0.95 }}>
-          Undo
-        </MotionButton>
-
-        <MotionButton onClick={redoColor} whileTap={{ scale: 0.95 }}>
-          Redo
         </MotionButton>
       </div>
     </>

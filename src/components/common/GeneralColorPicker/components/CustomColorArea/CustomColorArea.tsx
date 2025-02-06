@@ -3,7 +3,7 @@ import { ColorArea, ColorThumb } from 'react-aria-components';
 import styles from './styles.module.scss';
 import { ICustomColorAreaProps } from './CustomColoArea.types';
 
-const CustomColorArea = memo<ICustomColorAreaProps>(({ value, onChange }) => (
+const CustomColorArea = memo<ICustomColorAreaProps>(({ value, onChange,onChangeEnd, }) => (
   <div>
     <ColorArea
       colorSpace='hsb'
@@ -12,6 +12,7 @@ const CustomColorArea = memo<ICustomColorAreaProps>(({ value, onChange }) => (
       className={styles.styledColorArea}
       value={value}
       onChange={onChange}
+      onChangeEnd={onChangeEnd}
       aria-label="Color selection area" 
     >
       <ColorThumb className={styles.ariaColorThumb} aria-label="Color picker thumb"  />

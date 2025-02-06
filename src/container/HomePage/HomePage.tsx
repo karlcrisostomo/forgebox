@@ -1,15 +1,15 @@
-import { IGoogleFontsResponse, NextPageWithLayout } from "@/types";
+import { NextPageWithLayout } from "@/types";
 import styles from "./styles.module.scss";
 import { RootLayout } from "@/layouts/RootLayout";
 import { GeneralToolbar } from "@/components";
 import { useThemeChange } from "@/hooks";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { fetchGoogleFonts } from "@/api/googleFonts";
 
 const HomePage: NextPageWithLayout = () => {
   const { primaryColor, secondaryColor, textColor, accentColor, isDarkMode } =
     useThemeChange();
-  const [data, setData] = useState<IGoogleFontsResponse | null>(null);
+  // const [data, setData] = useState<IGoogleFontsResponse | null>(null);
 
   console.log("fetchGoogleFonts function:", fetchGoogleFonts); //
 
@@ -20,17 +20,17 @@ const HomePage: NextPageWithLayout = () => {
     );
   }, [isDarkMode]);
 
-  useEffect(() => {
-    const getFonts = async () => {
-      try {
-        const res = await fetchGoogleFonts();
-        setData(res);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    getFonts();
-  }, []);
+  // useEffect(() => {
+  //   const getFonts = async () => {
+  //     try {
+  //       const res = await fetchGoogleFonts();
+  //       setData(res);
+  //     } catch (err) {
+  //       console.error(err);
+  //     }
+  //   };
+  //   getFonts();
+  // }, []);
 
   return (
     <div className={styles.container}>
@@ -64,8 +64,6 @@ const HomePage: NextPageWithLayout = () => {
 
       <div>
         <h1>google fonts</h1>
-        {data &&
-          data.items.map((item, idx) => <div key={idx}> {item.family}</div>)}
       </div>
       <GeneralToolbar />
     </div>
