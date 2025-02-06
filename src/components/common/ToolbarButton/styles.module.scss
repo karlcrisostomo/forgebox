@@ -1,0 +1,25 @@
+@import '@/styles/color';
+
+.toolbarBtnContainer {
+  position: relative;
+  width: fit-content;
+  border: none;
+  border-radius: 0.4em;
+
+  &:hover {
+    background-color: $bleachedSilk;
+    cursor: pointer;
+  }
+  span {
+    font-size: 0.9rem;
+  }
+}
+.toolbarBtnContent {
+  display: flex;
+  margin: auto;
+  align-items: center;
+  gap: 5px;
+}
+.colorSwatch {
+  width: 30px;
+}

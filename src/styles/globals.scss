@@ -1,0 +1,9 @@
+@import './color';
+
+#nprogress .bar {
+  background: $saphire-blue !important;
+}
+
+#nprogress .spinner-icon {
+  display: none !important;
+}

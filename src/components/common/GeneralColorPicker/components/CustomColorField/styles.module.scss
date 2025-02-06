@@ -1,0 +1,20 @@
+@import '@/styles/color';
+
+.colorFieldContainer {
+  outline: none;
+  padding: 1em 0 1em 0;
+  border-color: white;
+}
+
+.styledInput {
+  outline: none;
+  border: none;
+  text-align: center;
+  border: 1px solid grey;
+  padding: 0.4em;
+  border-radius: 0.5em;
+  &:focus {
+    border: solid 1px  black;
+    padding: 0.4em;
+  }
+}
