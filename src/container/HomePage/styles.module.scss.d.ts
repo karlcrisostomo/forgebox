@@ -2,6 +2,7 @@ export type Styles = {
   component: string;
   container: string;
   placeholder: string;
+  fontsContainer: string;
 };
 
 export type ClassNames = keyof Styles;

@@ -6,6 +6,7 @@ import {
   undoColor,
   redoColor,
   toggleDarkMode,
+  randomizeColors,
 } from "@/store/themeChanger/action";
 import { IThemeColors } from "@/types";
 
@@ -14,24 +15,17 @@ import { parseColors } from "@/utils";
 export const useThemeChange = () => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const {
-    textColor,
-    accentColor,
-    primaryColor,
-    secondaryColor,
-    past,
-    current,
-    isDarkMode,
-  } = useSelector((state: RootState) => state.themeChanger);
+  const { text, accent, primary, secondary, past, current, isDarkMode } =
+    useSelector((state: RootState) => state.themeChanger);
 
   const convertedColors = useMemo(
     () => ({
-      textColor: parseColors(textColor),
-      accentColor: parseColors(accentColor),
-      primaryColor: parseColors(primaryColor),
-      secondaryColor: parseColors(secondaryColor),
+      text: parseColors(text),
+      accent: parseColors(accent),
+      primary: parseColors(primary),
+      secondary: parseColors(secondary),
     }),
-    [textColor, accentColor, primaryColor, secondaryColor],
+    [text, accent, primary, secondary],
   );
 
   const handleUpdateColors = useCallback(
@@ -41,12 +35,9 @@ export const useThemeChange = () => {
     [dispatch],
   );
 
-  // const handleRandomizeColors = useCallback(
-  //   (colors: IThemeColors) => {
-  //     dispatch(randomizeColors(colors));
-  //   },
-  //   [dispatch]
-  // );
+  const handleRandomizeColors = useCallback(() => {
+    dispatch(randomizeColors());
+  }, [dispatch]);
 
   const handleUndo = useCallback(() => {
     if (past.length > 0) {
@@ -74,5 +65,6 @@ export const useThemeChange = () => {
     canRedo: current.length > 0,
     isDarkMode,
     toggleDarkMode: handleToggleDarkMode,
+    randomizeColors: handleRandomizeColors,
   } as const;
 };

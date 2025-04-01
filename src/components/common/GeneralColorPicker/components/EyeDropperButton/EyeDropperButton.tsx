@@ -1,10 +1,9 @@
-import React from 'react';
-import { memo } from 'react';
-import { Button } from 'react-aria-components';
-import { IEyeDropperButtonProps } from './EyeDropper.types';
-import Image from 'next/image';
-import eyeDropperIcon from '@/assets/icons/eye-dropper.svg'
-
+import React from "react";
+import { memo } from "react";
+import { IEyeDropperButtonProps } from "./EyeDropper.types";
+import Image from "next/image";
+import eyeDropperIcon from "@/assets/icons/eye-dropper.svg";
+import { MotionButton } from "@/components/common/MotionButton";
 
 const EyeDropperButton = memo<IEyeDropperButtonProps>(({ onPickColor }) => {
   // const state = React.useContext(ColorPickerStateContext)!;
@@ -16,22 +15,26 @@ const EyeDropperButton = memo<IEyeDropperButtonProps>(({ onPickColor }) => {
   if (!window.EyeDropper) return null;
   return (
     <div>
-      <Button
-        aria-label='Eye Dropper'
+      <MotionButton
+        aria-label="Eye Dropper"
         // onPress={async () => {
         //   const dropper = new window.EyeDropper();
         //   const result = await dropper.open();
         //   state?.setColor(result.sRGBHex);
         // }}
-        onPress={onPickColor}
+        onClick={onPickColor}
       >
-          <Image src={eyeDropperIcon} width={24} height={24} alt='eye-dropper-icon' />
-      </Button>
-
+        <Image
+          src={eyeDropperIcon}
+          width={24}
+          height={24}
+          alt="eye-dropper-icon"
+        />
+      </MotionButton>
     </div>
   );
 });
 
-EyeDropperButton.displayName = 'EyeDropperButton';
+EyeDropperButton.displayName = "EyeDropperButton";
 
 export default EyeDropperButton;

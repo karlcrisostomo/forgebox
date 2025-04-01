@@ -1,2 +1,1 @@
-export * from "./all-tools";
-export * from "./Categories/Categories";
+export { default } from "./ToolBox";

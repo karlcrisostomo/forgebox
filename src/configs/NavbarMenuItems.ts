@@ -12,7 +12,7 @@ export const NavbarMenuItems: INavbarMenuItem[] = [
   },
   {
     name: "ToolBox",
-    href: "/all-tools",
-    includePrefixes: ["/all-tools"],
+    href: "/tool-box",
+    includePrefixes: ["/tool-box"],
   },
 ];

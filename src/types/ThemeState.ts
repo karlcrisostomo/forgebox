@@ -1,27 +1,31 @@
-export type ThemeColorType =
-  | "primary"
-  | "secondary"
-  | "accent"
-  | "text"
-  | "undo"
-  | "redo";
+import { StaticImageData } from "next/image";
+
+export type ThemeColorType = "primary" | "secondary" | "accent" | "text";
+
+export type ICategoryTheme = "color" | "utility";
+
 export type IColorSpace = "hsl" | "hex" | "rgb";
 
-export type IThemePalette = "primary" | "secondary" | "accent" | "text";
-
 export interface IButtonConfig {
-  type: ThemeColorType | "undo" | "redo";
+  id: string;
+  type: ICategoryTheme;
   title: string;
-  category: "colors" | "history";
+  icon?: StaticImageData | string;
+  action?: () => void;
 }
 export interface IThemeColors {
-  textColor?: string;
-  primaryColor?: string;
-  secondaryColor?: string;
-  accentColor?: string;
+  [key: string]: string;
+  primary: string;
+  secondary: string;
+  accent: string;
+  text: string;
 }
 
-export interface IThemeState extends IThemeColors {
+export interface IThemeState {
+  primary: string;
+  secondary: string;
+  accent: string;
+  text: string;
   past: IThemeColors[];
   current: IThemeColors[];
   isDarkMode: boolean;

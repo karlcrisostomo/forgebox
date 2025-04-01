@@ -1,1 +1,2 @@
-export * from "./ThemeButton";
+export * from "./ThemeButtons";
+export * from "./ColorSpaces";

@@ -2,18 +2,20 @@ import { IThemeColors, IThemeState } from "@/types";
 import { UnknownAction } from "redux";
 import colors from "@/styles/_themeColor.module.scss";
 import {
+  RANDOMIZE_COLORS,
   REDO_COLOR,
   TOGGLE_DARK_MODE,
   UNDO_COLOR,
   UPDATE_COLORS,
 } from "./actionTypes";
+import { generateRandomColors } from "@/utils";
 // import { generateRandomColors } from "@/utils";
 
 const initialState: IThemeState = {
-  textColor: colors.initialTextColor,
-  accentColor: colors.accent,
-  primaryColor: colors.primary,
-  secondaryColor: colors.secondary,
+  text: colors.initialTextColor,
+  accent: colors.accent,
+  primary: colors.primary,
+  secondary: colors.secondary,
   past: [],
   current: [],
   isDarkMode: false,
@@ -24,10 +26,10 @@ interface IColorAction extends UnknownAction {
 }
 
 const getCurrentColors = (state: IThemeState): IThemeColors => ({
-  textColor: state.textColor,
-  accentColor: state.accentColor,
-  primaryColor: state.primaryColor,
-  secondaryColor: state.secondaryColor,
+  text: state.text,
+  accent: state.accent,
+  primary: state.primary,
+  secondary: state.secondary,
 });
 
 const reducer = (state = initialState, action: IColorAction) => {
@@ -44,33 +46,31 @@ const reducer = (state = initialState, action: IColorAction) => {
         future: [],
       };
     }
-    // case RANDOMIZE_COLORS: {
-    //     const currentColors: IThemeColors = {
-    //         textColor: state.textColor,
-    //         accentColor: state.accentColor,
-    //         primaryColor: state.primaryColor,
-    //         secondaryColor: state.secondaryColor,
-    //     };
+    case RANDOMIZE_COLORS: {
+      const currentColors = getCurrentColors(state);
 
-    //     const colorKeys: (keyof IThemeColors)[] = [
-    //         'textColor',
-    //         'accentColor',
-    //         'primaryColor',
-    //         'secondaryColor'
-    //     ];
+      const colorKeys: (keyof IThemeColors)[] = [
+        "text",
+        "accent",
+        "primary",
+        "secondary",
+      ];
 
-    //     const newColors = colorKeys.reduce((acc, color) => ({
-    //         ...acc,
-    //         [color]: generateRandomColors()
-    //     }), {} as IThemeColors);
+      const newColors = colorKeys.reduce(
+        (acc, color) => ({
+          ...acc,
+          [color]: generateRandomColors(),
+        }),
+        {} as IThemeColors,
+      );
 
-    //     return {
-    //         ...state,
-    //         ...newColors,
-    //         past: [...state.past, currentColors],
-    //         future: []
-    //     };
-    // }
+      return {
+        ...state,
+        ...newColors,
+        past: [...state.past, currentColors],
+        future: [],
+      };
+    }
 
     case UNDO_COLOR: {
       const previous = state.past[state.past.length - 1];

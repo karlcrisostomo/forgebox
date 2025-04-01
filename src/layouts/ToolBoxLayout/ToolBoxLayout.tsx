@@ -1,7 +1,7 @@
 import { memo } from "react";
 import { IToolBoxLayoutProps } from "./ToolBoxLayout.types";
-import SideBar from "@/components/Common/SideBar/SideBar";
 import { RootLayout } from "../RootLayout";
+import { SideBar } from "@/components";
 
 const ToolBoxLayout = memo<IToolBoxLayoutProps>(({ children }) => {
   return (

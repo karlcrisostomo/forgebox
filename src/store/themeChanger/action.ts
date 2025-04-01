@@ -7,17 +7,12 @@ import {
   UPDATE_COLORS,
 } from "./actionTypes";
 
-export const updateColors = (
-  payload: IThemeColors,
-  isFinal: boolean = true,
-) => ({
+export const updateColors = (colors: Partial<IThemeColors>) => ({
   type: UPDATE_COLORS,
-  payload,
-  isFinal,
+  payload: colors,
 });
-export const randomizeColors = (payload: IThemeColors) => ({
+export const randomizeColors = () => ({
   type: RANDOMIZE_COLORS,
-  payload,
 });
 
 export const undoColor = () => ({

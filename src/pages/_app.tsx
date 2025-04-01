@@ -8,8 +8,10 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
 import "nprogress/nprogress.css";
 import "@/styles/globals.scss";
+import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
 
 Router.events.on("routeChangeStart", () => NProgress.start());
 Router.events.on("routeChangeComplete", () => NProgress.done());
@@ -23,7 +25,9 @@ export default function App({ Component, pageProps }: CustomAppProps) {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <QueryClientProvider client={queryClient}>
-          {getLayout(<Component {...pageProps} />)}{" "}
+          <ChakraProvider value={defaultSystem}>
+            {getLayout(<Component {...pageProps} />)}{" "}
+          </ChakraProvider>
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
       </PersistGate>

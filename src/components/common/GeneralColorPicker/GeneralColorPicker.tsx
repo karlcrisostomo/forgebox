@@ -1,31 +1,34 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { memo, useCallback, useMemo, useState } from 'react';
-import { Color, parseColor } from 'react-aria-components';
-import styles from './styles.module.scss';
+import { memo, useCallback, useMemo, useState } from "react";
+import { Color, parseColor } from "react-aria-components";
+import styles from "./styles.module.scss";
 import {
   CustomColorArea,
   CustomColorField,
   CustomColorSlider,
   EyeDropperButton,
-} from './components';
-import { useThemeChange } from '@/hooks';
-import { IThemeColors, IThemePalette } from '@/types';
-import { IColorPickerProps } from './GeneralColorPicker.types';
-import CustomColorSwatch from './components/CustomColorSwatch/CustomColorSwatch';
+} from "./components";
+import { useThemeChange } from "@/hooks";
+import { IThemeColors, ThemeColorType } from "@/types";
+import { IColorPickerProps } from "./GeneralColorPicker.types";
+import CustomColorSwatch from "./components/CustomColorSwatch/CustomColorSwatch";
 
 const GeneralColorPicker = memo<IColorPickerProps>(({ colorType, isOpen }) => {
-  const { updateColors, primaryColor, secondaryColor, accentColor, textColor } =
-    useThemeChange();
+  const { updateColors, primary, secondary, accent, text } = useThemeChange();
+
+  const colorValues = useMemo(
+    () => ({
+      primary: primary,
+      secondary: secondary,
+      accent: accent,
+      text: text,
+    }),
+    [primary, secondary, accent, text],
+  );
 
   const currentColor = useMemo(
-    () =>
-      ({
-        primary: primaryColor,
-        secondary: secondaryColor,
-        accent: accentColor,
-        text: textColor,
-      })[colorType as IThemePalette],
-    [colorType, primaryColor, secondaryColor, accentColor, textColor]
+    () => colorValues[colorType as keyof typeof colorValues],
+    [colorValues, colorType],
   );
 
   const [tempColor, setTempColor] = useState(currentColor);
@@ -33,19 +36,18 @@ const GeneralColorPicker = memo<IColorPickerProps>(({ colorType, isOpen }) => {
 
   const handleColorChange = useCallback((color: Color | null) => {
     if (!color) return;
-
-    setTempColor(color.toString('hsl'));
+    setTempColor(color.toString("hsl"));
     setIsDragging(true);
   }, []);
 
   const handleDragEnd = useCallback(
     (color: Color | null) => {
       if (!color) return;
-      const colorKey = `${colorType}Color` as keyof IThemeColors;
-      updateColors({ [colorKey]: color.toString('hsl') });
+      // Directly update using the color type as the key
+      updateColors({ [colorType]: color.toString("hsl") });
       setIsDragging(false);
     },
-    [updateColors, colorType]
+    [updateColors, colorType],
   );
 
   const handleEyeDropper = useCallback(async () => {
@@ -53,15 +55,13 @@ const GeneralColorPicker = memo<IColorPickerProps>(({ colorType, isOpen }) => {
       if (!window.EyeDropper) return;
       const dropper = new window.EyeDropper();
       const { sRGBHex } = await dropper.open();
-      const color = parseColor(sRGBHex).toFormat('hsl');
-      setTempColor(color.toString('hsl'));
+      const color = parseColor(sRGBHex).toFormat("hsl");
+      setTempColor(color.toString("hsl"));
       handleDragEnd(color);
     } catch (e) {
-      console.error('EyeDropper failed:', e);
+      console.error("EyeDropper failed:", e);
     }
   }, [handleDragEnd]);
-
-  if (!isOpen) return null;
 
   return (
     <div className={styles.generalColorPickerWrapper}>
@@ -72,7 +72,7 @@ const GeneralColorPicker = memo<IColorPickerProps>(({ colorType, isOpen }) => {
       />
       <CustomColorSlider
         value={tempColor}
-        channel='hue'
+        channel="hue"
         onChange={handleColorChange}
       />
 
@@ -86,6 +86,6 @@ const GeneralColorPicker = memo<IColorPickerProps>(({ colorType, isOpen }) => {
   );
 });
 
-GeneralColorPicker.displayName = 'GeneralColorPicker';
+GeneralColorPicker.displayName = "GeneralColorPicker";
 
 export default GeneralColorPicker;

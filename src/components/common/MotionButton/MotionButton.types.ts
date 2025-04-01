@@ -1,5 +1,5 @@
-import { MotionProps } from 'framer-motion';
-import { MouseEvent } from 'react';
+import { MotionProps } from "framer-motion";
+import { MouseEvent } from "react";
 
 export interface IMotionButtonProps extends MotionProps {
   className?: string;

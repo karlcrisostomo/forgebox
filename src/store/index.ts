@@ -2,6 +2,7 @@ import { combineReducers, createStore } from "redux";
 import { persistReducer, persistStore } from "redux-persist";
 
 import themeChanger from "./themeChanger/reducer";
+import fontChanger from "./fontChanger/reducer";
 import sessionStorage from "redux-persist/lib/storage/session";
 
 const persistCofig = {
@@ -10,6 +11,7 @@ const persistCofig = {
 };
 const rootReducer = combineReducers({
   themeChanger,
+  fontChanger,
 });
 
 const persistedReducer = persistReducer(persistCofig, rootReducer);
