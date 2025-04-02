@@ -1,5 +1,4 @@
 import { IGoogleFont, NextPageWithLayout } from "@/types";
-import styles from "./styles.module.scss";
 import { RootLayout } from "@/layouts/RootLayout";
 import { GeneralToolbar, ThemeColorControls } from "@/components";
 import { useThemeChange } from "@/hooks";
@@ -31,7 +30,7 @@ const HomePage: NextPageWithLayout = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <div className="">
       <div
         style={{
           backgroundColor: primary,
