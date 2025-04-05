@@ -1,13 +1,14 @@
 import { memo } from "react";
 import { IToolBoxLayoutProps } from "./ToolBoxLayout.types";
 import { RootLayout } from "../RootLayout";
-import { SideBar } from "@/components";
+import { CardNavigation, SideBar } from "@/components";
 
-const ToolBoxLayout = memo<IToolBoxLayoutProps>(({ children }) => {
+const ToolBoxLayout = memo<IToolBoxLayoutProps>(({ children, routes }) => {
   return (
     <RootLayout>
       <SideBar />
       {children}
+      {routes && <CardNavigation nestedRoutes={routes} />}
     </RootLayout>
   );
 });

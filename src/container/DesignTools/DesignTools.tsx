@@ -1,5 +1,5 @@
 import { DesignToolsItems } from "@/configs";
-import { PageLayout } from "@/layouts";
+import { ToolBoxLayout } from "@/layouts";
 import { NextPageWithLayout } from "@/types";
 
 const DesignTools: NextPageWithLayout = () => {
@@ -7,7 +7,7 @@ const DesignTools: NextPageWithLayout = () => {
 };
 
 DesignTools.getLayout = (page) => (
-  <PageLayout routes={DesignToolsItems}>{page}</PageLayout>
+  <ToolBoxLayout routes={DesignToolsItems}>{page}</ToolBoxLayout>
 );
 
 export default DesignTools;
