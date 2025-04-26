@@ -1,4 +1,4 @@
-import { IGoogleFontsPayload } from "@/types";
+import { IGoogleFont, IGoogleFontsPayload } from "@/types";
 import { UnknownAction } from "redux";
 import {
   UPDATE_FONTS,
@@ -27,13 +27,36 @@ const initialState: IGoogleFontState = {
 };
 
 interface IFontAction extends UnknownAction {
-  payload?: Partial<IGoogleFontsPayload>;
+  payload?: Partial<IGoogleFontsPayload> & { availableFonts?: IGoogleFont[] };
 }
 
 const getCurrentFonts = (state: IGoogleFontState) => ({
   headings: state.headings,
   body: state.body,
 });
+
+const getRandomFont = (
+  availableFonts: IGoogleFont[],
+  currentFont: string,
+): string => {
+  if (!availableFonts || availableFonts.length === 0) {
+    return currentFont; // Fallback to current if no fonts available
+  }
+
+  // Filter out the current font to ensure we get a different one
+  const filteredFonts = availableFonts.filter(
+    (font) => font.family !== currentFont,
+  );
+
+  // If all fonts are filtered out, return the current font
+  if (filteredFonts.length === 0) {
+    return currentFont;
+  }
+
+  // Select a random font from the filtered list
+  const randomIndex = Math.floor(Math.random() * filteredFonts.length);
+  return filteredFonts[randomIndex].family || currentFont;
+};
 
 const reducer = (state = initialState, action: IFontAction) => {
   switch (action.type) {
@@ -51,12 +74,21 @@ const reducer = (state = initialState, action: IFontAction) => {
 
     case RANDOMIZE_FONTS: {
       const currentFonts = getCurrentFonts(state);
-      const availableFonts = [...state.past, currentFonts];
-      const randomIndex = Math.floor(Math.random() * availableFonts.length);
+      const availableFonts = action.payload?.availableFonts || [];
+
+      if (availableFonts.length === 0) return state;
+
+      const randomHeadings = getRandomFont(
+        availableFonts,
+        currentFonts.headings,
+      );
+
+      const randomBody = getRandomFont(availableFonts, currentFonts.body);
 
       return {
         ...state,
-        ...availableFonts[randomIndex],
+        headings: randomHeadings,
+        body: randomBody,
         past: [...state.past, currentFonts],
         current: [],
       };

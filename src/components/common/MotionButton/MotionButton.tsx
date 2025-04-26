@@ -1,26 +1,22 @@
-import { memo } from 'react';
-import { IMotionButtonProps } from './MotionButton.types';
+import { memo } from "react";
+import { IMotionButtonProps } from "./MotionButton.types";
 
-import { motion } from 'framer-motion';
-import classNames from 'classnames';
-import styles from './styles.module.scss';
-import Image from 'next/image';
+import { motion } from "framer-motion";
+import classNames from "classnames";
+import styles from "./styles.module.scss";
 
 const MotionButton = memo<IMotionButtonProps>(
-  ({ className, children, onClick, icon, ...props }) => (
+  ({ className, children, onClick, ...props }) => (
     <motion.button
       onClick={onClick}
       className={classNames(styles.styledButton, className)}
       {...props}
     >
-      <div>
-        {icon && <Image src={icon} width={24} height={24} alt={icon} />}
-        {children}
-      </div>
+      <div>{children}</div>
     </motion.button>
-  )
+  ),
 );
 
-MotionButton.displayName = 'MotionButton';
+MotionButton.displayName = "MotionButton";
 
 export default MotionButton;

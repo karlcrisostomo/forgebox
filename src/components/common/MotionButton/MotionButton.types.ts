@@ -5,6 +5,5 @@ export interface IMotionButtonProps extends MotionProps {
   className?: string;
   children: React.ReactNode;
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
-  icon?: string;
   index?: number;
 }

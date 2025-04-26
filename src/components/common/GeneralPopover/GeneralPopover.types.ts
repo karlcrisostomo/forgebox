@@ -1,8 +1,8 @@
+import { PopoverContentProps } from "@chakra-ui/react";
 import { IMotionButtonProps } from "../MotionButton";
 
-export interface IPopoverProps {
+export interface IPopoverProps extends PopoverContentProps {
   children?: React.ReactNode;
-  className?: string;
   trigger?: React.ReactElement<IMotionButtonProps>;
   isOpen?: boolean;
   onOpenChange?: (open: boolean) => void;

@@ -4,4 +4,5 @@ export interface IToolBarProps {
   secondaryToolbarComponent: React.ReactNode;
   primaryToolbarLabel?: string;
   secondaryToolbarLabel?: string;
+  className?: string;
 }

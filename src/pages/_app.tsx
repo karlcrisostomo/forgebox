@@ -26,7 +26,9 @@ export default function App({ Component, pageProps }: CustomAppProps) {
       <PersistGate loading={null} persistor={persistor}>
         <QueryClientProvider client={queryClient}>
           <ChakraProvider value={defaultSystem}>
-            {getLayout(<Component {...pageProps} />)}{" "}
+            <main className="container">
+              {getLayout(<Component {...pageProps} />)}{" "}
+            </main>
           </ChakraProvider>
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>

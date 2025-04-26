@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "@/store";
@@ -7,7 +8,8 @@ import {
   undoFonts,
   redoFonts,
 } from "@/store/fontChanger/action";
-import { IGoogleFontsPayload } from "@/types";
+import { IGoogleFont, IGoogleFontsPayload } from "@/types";
+import { loadGoogleFont } from "@/utils";
 
 export const useFontChange = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -23,9 +25,26 @@ export const useFontChange = () => {
     [dispatch],
   );
 
-  const handleRandomizeFonts = useCallback(() => {
-    dispatch(randomizeFonts());
-  }, [dispatch]);
+  const handleRandomizeFonts = useCallback(
+    (availableFonts: IGoogleFont[]) => {
+      if (availableFonts.length > 0) {
+        // Dispatch the action with the available fonts
+        dispatch(randomizeFonts(availableFonts));
+
+        const state = (dispatch as any).getState?.();
+        if (state?.fontChanger) {
+          const { headings: newHeadings, body: newBody } = state.fontChanger;
+
+          // Preload the selected fonts
+          Promise.all([
+            loadGoogleFont(newHeadings),
+            loadGoogleFont(newBody),
+          ]).catch((err) => console.error("Error loading fonts:", err));
+        }
+      }
+    },
+    [dispatch],
+  );
 
   const handleUndo = useCallback(() => {
     if (past.length > 0) {

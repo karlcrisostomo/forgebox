@@ -1,15 +1,10 @@
-@import '@/styles/color';
+@import "@/styles/color";
 
 .toolbarBtnContainer {
   position: relative;
   width: 100%;
   border: none;
   border-radius: 0.4em;
-
-  &:hover {
-    background-color: $bleachedSilk;
-    cursor: pointer;
-  }
   span {
     font-size: 0.9rem;
   }

@@ -3,6 +3,7 @@ export type Styles = {
   container: string;
   placeholder: string;
   fontsContainer: string;
+  toolbarWrapper: string;
 };
 
 export type ClassNames = keyof Styles;

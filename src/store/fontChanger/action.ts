@@ -1,4 +1,4 @@
-import { IGoogleFontsPayload } from "@/types";
+import { IGoogleFont, IGoogleFontsPayload } from "@/types";
 import {
   RANDOMIZE_FONTS,
   REDO_FONT,
@@ -11,8 +11,9 @@ export const updateFonts = (fonts: IGoogleFontsPayload) => ({
   payload: fonts,
 });
 
-export const randomizeFonts = () => ({
+export const randomizeFonts = (availableFonts: IGoogleFont[]) => ({
   type: RANDOMIZE_FONTS,
+  payload: { availableFonts },
 });
 
 export const undoFonts = () => ({

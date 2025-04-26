@@ -17,11 +17,14 @@ const ThemeButton = memo<IThemeButtonProps>(
       className={classNames(styles.toolbarBtnContainer, className)}
     >
       <div className={styles.toolbarBtnContent}>
-        <span>{title}</span>
-        <CustomColorSwatch
-          className={styles.colorSwatch}
-          color={themePalette}
-        />
+        {title && <span>{title}</span>}
+
+        {themePalette && (
+          <CustomColorSwatch
+            className={styles.colorSwatch}
+            color={themePalette}
+          />
+        )}
       </div>
     </MotionButton>
   ),

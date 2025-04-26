@@ -5,5 +5,4 @@ export * from "./MotionButton";
 export * from "./GeneralColorPicker";
 export * from "./GeneralToolbar";
 export * from "./ThemeButton";
-export * from "./ThemeColorControls";
 export * from "./CardNavigation";

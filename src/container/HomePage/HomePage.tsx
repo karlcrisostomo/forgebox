@@ -1,18 +1,17 @@
-import { IGoogleFont, NextPageWithLayout } from "@/types";
+import { NextPageWithLayout } from "@/types";
 import { RootLayout } from "@/layouts/RootLayout";
-import { GeneralToolbar, ThemeColorControls } from "@/components";
+import { GeneralToolbar } from "@/components";
 import { useThemeChange } from "@/hooks";
 import { useEffect } from "react";
-import { fetchGoogleFonts } from "@/api/googleFonts";
-import { useFetchGoogleFonts } from "@/api/hooks/useFetchGoogleFonts";
+import styles from "./styles.module.scss";
+import { FontsControl, ThemeColorControls } from "./components";
 import { useFontChange } from "@/hooks/useFontChange";
-import { SearchBox } from "@/components/common/SearchBox";
+import { loadGoogleFont } from "@/utils";
 
 const HomePage: NextPageWithLayout = () => {
   const { primary, secondary, text, accent, isDarkMode } = useThemeChange();
+  const { headings, body } = useFontChange();
   // const [data, setData] = useState<IGoogleFontsResponse | null>(null);
-  const { headings, body, updateFonts } = useFontChange();
-  console.log("fetchGoogleFonts function:", fetchGoogleFonts); //
 
   useEffect(() => {
     document.documentElement.setAttribute(
@@ -21,13 +20,10 @@ const HomePage: NextPageWithLayout = () => {
     );
   }, [isDarkMode]);
 
-  const { data: fonts } = useFetchGoogleFonts({
-    payload: { category: "sans-serif" },
-  });
-
-  const handleFontSelect = (font: IGoogleFont, type: "headings" | "body") => {
-    updateFonts({ [type]: font.family });
-  };
+  useEffect(() => {
+    const fonts = [headings, body].filter(Boolean);
+    fonts.forEach(loadGoogleFont);
+  }, [headings, body]);
 
   return (
     <div className="">
@@ -38,7 +34,7 @@ const HomePage: NextPageWithLayout = () => {
           borderRadius: "1rem",
         }}
       >
-        <span style={{ color: text }}>Primary</span>
+        <span style={{ color: text, fontFamily: headings }}>Primary</span>
       </div>
       <div
         style={{
@@ -47,7 +43,7 @@ const HomePage: NextPageWithLayout = () => {
           borderRadius: "1rem",
         }}
       >
-        <span style={{ color: text }}>secondary</span>
+        <span style={{ color: text, fontFamily: body }}>secondary</span>
       </div>
       <div
         style={{
@@ -59,40 +55,14 @@ const HomePage: NextPageWithLayout = () => {
         <span style={{ color: text }}>accent</span>
       </div>
 
-      <div>
-        <div>
-          <SearchBox<IGoogleFont>
-            data={fonts}
-            placeholder="test"
-            filterKey="family"
-            onSelect={(font) => handleFontSelect(font, "headings")}
-            selectedValue={headings}
-          />
-          <div style={{ fontFamily: headings, fontWeight: 500 }}>
-            Sample Heading Text
-          </div>
-        </div>
-
-        <div>
-          <SearchBox<IGoogleFont>
-            data={fonts}
-            filterKey="family"
-            onSelect={(font) => handleFontSelect(font, "body")}
-            selectedValue={body}
-            placeholder="test"
-          />
-          <div style={{ fontFamily: body, fontWeight: 500 }}>
-            The quick brown fox jumps over the lazy dog
-          </div>
-        </div>
+      <div className={styles.toolbarWrapper}>
+        <GeneralToolbar
+          primaryToolbarComponent={<ThemeColorControls />}
+          secondaryToolbarComponent={<FontsControl />}
+          primaryToolbarLabel="Colors"
+          secondaryToolbarLabel="Fonts"
+        />
       </div>
-
-      <GeneralToolbar
-        primaryToolbarComponent={<ThemeColorControls />}
-        secondaryToolbarComponent={null}
-        primaryToolbarLabel="Colors"
-        secondaryToolbarLabel="Fonts"
-      />
     </div>
   );
 };

@@ -1,9 +1,8 @@
 import { memo, useCallback, useState } from "react";
 
-import styles from "./styles.module.scss";
-
 import { IToolBarProps } from "./GeneralToolbar.types";
 import { MotionButton } from "../MotionButton";
+import { Stack } from "@chakra-ui/react";
 const GeneralToolbar = memo<IToolBarProps>(
   ({
     primaryToolbarComponent,
@@ -19,7 +18,17 @@ const GeneralToolbar = memo<IToolBarProps>(
     }, []);
 
     return (
-      <div className={styles.toolBarContainer}>
+      <Stack
+        display="flex"
+        flexDirection="row"
+        position="fixed"
+        bottom="1"
+        padding="0.5em"
+        backdropBlur="2xl"
+        background="whiteAlpha.400"
+        borderRadius="0.5em"
+        border="1px solid "
+      >
         <div>
           {isSecondaryToolbarOption
             ? secondaryToolbarComponent
@@ -31,7 +40,7 @@ const GeneralToolbar = memo<IToolBarProps>(
             ? primaryToolbarLabel
             : secondaryToolbarLabel}
         </MotionButton>
-      </div>
+      </Stack>
     );
   },
 );

@@ -10,12 +10,12 @@
   align-items: center;
 
   background-color: var(--bg-color);
-  [data-theme='dark'] & {
+  [data-theme="dark"] & {
     --bg-color: #121212;
     --text-color: #ffffff;
   }
 
-  [data-theme='light'] & {
+  [data-theme="light"] & {
     --bg-color: #ffffff;
     --text-color: #000000;
   }
@@ -25,7 +25,6 @@
   background-color: var(--background-color, #ffffff);
   width: fit-content;
   padding: 1rem;
-
 }
 
 .placeholder {
@@ -34,8 +33,13 @@
   background-color: red;
 }
 
+.fontsContainer {
+  overflow-y: scroll;
+  height: 200px;
+}
 
-.fontsContainer{
- overflow-y: scroll;
- height: 200px;
+.toolbarWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
