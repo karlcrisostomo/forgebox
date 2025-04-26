@@ -21,9 +21,9 @@ const FontsControl = memo(() => {
 
   const handleFontSelect = useCallback(
     (font: IGoogleFont, type: FontType) => {
-      if (font.family) {
-        loadGoogleFont(font.family);
-        updateFonts({ [type]: font.family });
+      if (font?.family) {
+        loadGoogleFont(font?.family);
+        updateFonts({ [type]: font?.family });
       }
     },
     [updateFonts],

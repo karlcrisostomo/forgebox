@@ -1,6 +1,6 @@
 import { NextPageWithLayout } from "@/types";
 import { RootLayout } from "@/layouts/RootLayout";
-import { GeneralToolbar } from "@/components";
+import { GeneralToolbar, StylePreview } from "@/components";
 import { useThemeChange } from "@/hooks";
 import { useEffect } from "react";
 import styles from "./styles.module.scss";
@@ -27,33 +27,19 @@ const HomePage: NextPageWithLayout = () => {
 
   return (
     <div className="">
-      <div
-        style={{
-          backgroundColor: primary,
-          padding: "2rem",
-          borderRadius: "1rem",
-        }}
-      >
-        <span style={{ color: text, fontFamily: headings }}>Primary</span>
-      </div>
-      <div
-        style={{
-          backgroundColor: secondary,
-          padding: "2rem",
-          borderRadius: "1rem",
-        }}
-      >
-        <span style={{ color: text, fontFamily: body }}>secondary</span>
-      </div>
-      <div
-        style={{
-          backgroundColor: accent,
-          padding: "2rem",
-          borderRadius: "1rem",
-        }}
-      >
-        <span style={{ color: text }}>accent</span>
-      </div>
+      <StylePreview
+        backgroundColor={primary}
+        textColor={text}
+        label="test"
+        fontFamily={headings}
+      />
+      <StylePreview
+        fontFamily={body}
+        backgroundColor={secondary}
+        textColor={text}
+        label="secondary"
+      />
+      <StylePreview backgroundColor={accent} textColor={text} label="accent" />
 
       <div className={styles.toolbarWrapper}>
         <GeneralToolbar

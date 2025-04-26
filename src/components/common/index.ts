@@ -6,3 +6,4 @@ export * from "./GeneralColorPicker";
 export * from "./GeneralToolbar";
 export * from "./ThemeButton";
 export * from "./CardNavigation";
+export * from "./StylePreview";
